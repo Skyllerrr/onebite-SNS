@@ -1,0 +1,20 @@
+import { useOpenPostEditorModal } from '@/store/post-editor-modal'
+import { PlusCircleIcon } from 'lucide-react'
+
+export default function CreatePostButton() {
+  // zustand의 store를 이용하여 만든 액션 함수(useOpenPostEditorModal()를 가져와서
+  // 모달을 열고 닫을 수 있도록 만듦
+  const openPostEditorModal = useOpenPostEditorModal()
+
+  return (
+    <div
+      onClick={openPostEditorModal}
+      className="bg-muted text-muted-foreground cursor-pointer rounded-xl px-6 py-4"
+    >
+      <div className="flex items-center justify-between">
+        <div>나누고 싶은 이야기가 있나요?</div>
+        <PlusCircleIcon className="h-5 w-5" />
+      </div>
+    </div>
+  ) 
+}
