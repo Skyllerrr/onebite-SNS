@@ -23,3 +23,25 @@ export async function uploadImage({
 
   return publicUrl
 }
+
+// 이미지 삭제 함수 (삭제 버튼 클릭 시 사용)
+// 특정된 모든 이미지 파일들을 제거하는 비동기 함수
+export async function deleteImagesInPath(path: string) {
+  const { data: files, error: fetchFilesError } = await supabase.storage
+    .from(BUCKET_NAME)
+    .list(path)
+  
+  // 현재 유저가 기존의 아바타 이미지를 등록해둔게 없다면 
+  // 삭제 요청을 보내지 않도록 예외처리
+  if (!files || files.length === 0) {
+    return;
+  }
+  
+  if (fetchFilesError) throw fetchFilesError
+  
+  const { error: removeError } = await supabase.storage
+    .from(BUCKET_NAME)
+    .remove(files.map((file) => `${path}/${file.name}`))
+      
+  if (removeError) throw removeError
+}

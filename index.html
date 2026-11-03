@@ -2,9 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>한입 로그</title>
+
+    <meta property="og:title" content="한입 로그" />
+    <meta 
+      property="og:description" 
+      content="한 입 크기로 잘라먹는 SNS 프로젝트" 
+      />
+    <meta property="og:image" content="/thumbnail.png" />
+
+    <script>
+      // 새로고침 시, 테마 유지
+      try {
+        const themeStore = localStorage.getItem("ThemeStore")? JSON.parse(
+          localStorage.getItem("ThemeStore")) 
+          : null
+
+        const theme = themeStore.state.theme
+
+        const htmlTag = document.documentElement
+        htmlTag.classList.remove('dark', 'light')
+
+        // system 테마는 사용자의 데스크탑의 설정값에 따라 테마가 다름
+        // 크게 중요하지 X
+        if (theme === 'system') {
+          const isDarkTheme = window.matchMedia('(prefers-color-scheme)'
+          ).matches
+
+          htmlTag.classList.add(isDarkTheme ? "dark" : "light")
+        } else {
+          htmlTag.classList.add(theme)
+        }
+      }
+      catch(error) {
+        console.error(error)
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

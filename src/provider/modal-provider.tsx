@@ -1,4 +1,6 @@
+import AlertModal from "@/components/modal/alert-modal"
 import PostEditorModal from "@/components/modal/post-editor-modal"
+import ProfileEditorModal from "@/components/modal/profile-editor-modal"
 import type { ReactNode } from 'react'
 import { createPortal } from "react-dom"
 
@@ -6,11 +8,17 @@ import { createPortal } from "react-dom"
 // 쓰는 이유 : 이렇게 "모달"을 랜더링 할때는 최종 화면 가장 앞에 띄워줘야 하기때문에 계층 구조로 인하여 그대로 컴포넌트를 가져오게 되면
 // 계층 하위에 있지말고 상위에 있도록 사용한다.
 export default function ModalProvider({ children }: { children: ReactNode }) {
-  return <>
-    {createPortal(
-      <PostEditorModal />,
-      document.getElementById('modal-root')!,
-    )}
-    {children}
-  </>
+  return (
+    <>
+      {createPortal(
+        <>
+          <AlertModal />
+          <PostEditorModal />
+          <ProfileEditorModal/>
+        </>,
+        document.getElementById('modal-root')!,
+      )}
+      {children}
+    </>
+  )
 }

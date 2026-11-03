@@ -1,7 +1,9 @@
 import CreatePostButton from "@/components/post/create-post-button";
+import PostFeed from "@/components/post/post-feed";
 
 export default function IndexPage() {
   return <div className="flex flex-col gap-18">
-    <CreatePostButton/>
+    <CreatePostButton />
+    <PostFeed/>
   </div>
 }

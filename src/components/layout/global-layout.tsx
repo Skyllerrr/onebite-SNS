@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router'
 import logo from '@/assets/logo.png'
-import defaultAvatar from '@/assets/default-avatar.png'
-import { SunIcon } from 'lucide-react'
+import ProfileButton from '../layout/header/profile-button'
+import ThemeButton from './header/theme-button'
 
 export default function GlobalLayout() {
   return (
@@ -13,13 +13,11 @@ export default function GlobalLayout() {
               className="h-5"
               src={logo}
               alt="한입 로그의 로고, 메세지 말풍선을 형상화한 모양이다" />
-            <div className="fold-bold">한입 로그</div>
+            <div className="fold-bold">한상헌의 일기장</div>
           </Link>
           <div className="flex items-center gap-5">
-            <div className="hover:bg-muted cursor-pointer rounded-full p-2">
-              <SunIcon/>
-            </div>
-            <img className="h-6" src={defaultAvatar} alt="" />
+            <ThemeButton/>
+            <ProfileButton/>
           </div>
         </div>
       </header>
@@ -27,7 +25,7 @@ export default function GlobalLayout() {
         <Outlet/>
       </main>
       <footer className="border-t py-10 text-muted-foreground text-center">
-        @winterlood
+        @Skyler
       </footer>
     </div>
   )

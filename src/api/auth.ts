@@ -2,6 +2,20 @@
 import supabase from "@/lib/supabase"
 import { Provider } from 'react';
 
+// 사용자 로그아웃 비동기 함수
+export async function signOut() {
+  const { error } = await supabase.auth.signOut()
+
+  // 기존에는 throw error로 예외상황을 던지지만,
+  // 여기서는 어떻게든 로그아웃만 시키면 되기 때문에,
+  // supabase서버와는 관계없이 로컬스토리지에 보관된 엑세스 토큰들을 아예 다 날려버리도록 설정해준다.
+  if (error) {
+    await supabase.auth.signOut({
+      scope: "local"
+    })
+  }
+}
+
 // 회원가입 비동기 함수
 export async function signUp({
   email,

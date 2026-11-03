@@ -1,5 +1,66 @@
 import type { PostEntity } from './../types';
 import supabase from '@/lib/supabase';
+import { uploadImage } from './image';
+
+
+// 포스트들을 조회 요청하는 비동기 함수
+// select() 메서드의 조인 문법으로 포스트 테이블의 정보를 불러올 때, 프로필 테이블의 정보까지 같이 불러옴
+// .select("*, author: profile!author_id (*)")
+// myLiked: like!post_id (*)도 마찬가지 - 라이크 테이블도 가져옴 (좋아요 기록 불러오기위함)
+export async function fetchPosts({
+  from,
+  to,
+  userId,
+  authorId
+}: {
+    from: number,
+    to: number,
+    userId: string,
+    authorId: string
+}) {
+  const request = supabase
+    .from("post")
+    .select("*, author: profile!author_id (*), myLiked: like!post_id (*)")
+    .eq("like.user_id", userId)
+    .order("created_at", { ascending: false })
+    .range(from, to)
+  
+  // 프로필 상세 페이지에서 해당 유저의 프로필만 가져오게끔 하기 위함
+  if (authorId) request.eq("author_id", authorId)
+
+  const { data, error } = await request
+  
+  if (error) throw error
+  return data.map((post) => ({
+    ...post,
+    isLiked: post.myLiked && post.myLiked.length > 0
+  }))
+}
+
+
+// 캐싱 설정(정규화)을 위한 비동기 함수
+// 좋아요 상태 표시 포함
+export async function fetchPostById({
+  postId,
+  userId
+  }: {
+    postId: number,
+    userId: string
+  }) {
+  const { data, error } = await supabase
+    .from("post")
+    .select("*, author: profile!author_id (*), myLiked: like!post_id (*)")
+    .eq("like.user_id", userId)
+    .eq("id", postId)
+    .single()
+  
+  if (error) throw error
+  return {
+    ...data,
+    isLiked: data.myLiked && data.myLiked.length > 0
+  }
+}
+
 
 // 포스트를 생성하는 비동기 함수
 // .select().single() - 컨텐츠가 들어있는 모든 포스트들을 가져오는데 하나만 가져오게끔 만듦
@@ -57,8 +118,7 @@ export async function createPostWithImages({
     })
 
     return updatedPost
-  }
-  catch(error) {
+  } catch(error) {
     await deletePost(post.id)
     throw error
   }
@@ -99,6 +159,24 @@ export async function deletePost(id: number) {
     .select()
     .single()
   
+  if (error) throw error
+  return data
+}
+
+
+
+// 좋아요
+export async function togglePostLike({
+  postId,
+  userId }: {
+    postId: number,
+    userId: string
+}) {
+  const { data, error } = await supabase.rpc("toggle_post_like", {
+    p_post_id: postId,
+    p_user_id: userId
+  })
+
   if (error) throw error
   return data
 }
