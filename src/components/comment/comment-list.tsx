@@ -1,6 +1,6 @@
 import CommentItem from "@/components/comment/comment-item";
 import { useCommentsData } from "@/hooks/queries/use-comments-data";
-import type { NestedComment } from "@/types";
+import type { Comment, NestedComment } from "@/types";
 import Fallback from "../fallback";
 import Loader from "../loader";
 

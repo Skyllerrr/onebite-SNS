@@ -7,7 +7,7 @@ import defaultAvatar from '@/assets/default-avatar.png'
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useProfileEditorModal } from "@/store/profile-editor-modal";
-import { ChangeEvent, useRef, useState, useEffect } from "react";
+import { type ChangeEvent, useRef, useState, useEffect } from "react";
 import { useUpdateProfile } from "@/hooks/mutations/profile/use-update-profile";
 import { toast } from "sonner"
 
@@ -46,7 +46,7 @@ export default function ProfileEditorModal() {
 
   // 프로필 모달에서 각각의 사용자의 입력들을 보관하는 3개의 state
   const [avatarImage, setAvatarImage] = useState<Image | null>(null)
-  const [nickname, setNickname] = useState()
+  const [nickname, setNickname] = useState("")
   const [bio, setBio] = useState("")
 
   // 프로필 모달의 Input 태그를 참조할 수 있는 레퍼런스 객체

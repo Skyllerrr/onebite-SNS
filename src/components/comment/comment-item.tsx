@@ -31,7 +31,7 @@ export default function CommentItem(props: NestedComment) {
   const [isEditing, setIsEditing] = useState(false)
 
   // 사용자가 대댓글을 선택했는지 여부를 저장하는 state
-  const [isReply, setIsReply] = useState()
+  const [isReply, setIsReply] = useState(false)
 
   // 댓글 수정 state를 토글할 수 있는 함수
   // 현재 state값을 토글하도록 만듦

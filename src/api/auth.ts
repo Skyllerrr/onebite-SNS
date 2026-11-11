@@ -1,6 +1,6 @@
 // 비동기 함수 (인증 관련)
 import supabase from "@/lib/supabase"
-import { Provider } from 'react';
+import type { Provider } from '@supabase/supabase-js';
 
 // 사용자 로그아웃 비동기 함수
 export async function signOut() {

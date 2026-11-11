@@ -44,7 +44,7 @@ export async function updateProfile({
   userId: string
   nickname?: string
   bio?: string
-  avatarImageFile?: string
+  avatarImageFile?: File
 }) {
   // 1. 기존 아바타 이미지 삭제
   if (avatarImageFile) {

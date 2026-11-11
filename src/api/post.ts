@@ -16,7 +16,7 @@ export async function fetchPosts({
     from: number,
     to: number,
     userId: string,
-    authorId: string
+    authorId?: string
 }) {
   const request = supabase
     .from("post")

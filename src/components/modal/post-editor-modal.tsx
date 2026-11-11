@@ -6,7 +6,7 @@ import { useOpenAlertModal } from '@/store/alert-modal'
 import { usePostEditorModal } from '@/store/post-editor-modal'
 import { useSession } from '@/store/session'
 import { ImageIcon, XIcon } from 'lucide-react'
-import { useRef, useState, useEffect, ChangeEvent } from 'react'
+import { useRef, useState, useEffect, type ChangeEvent } from 'react'
 import { toast } from "sonner"
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
 
@@ -84,7 +84,7 @@ export default function PostEditorModal() {
       setImages([])
     } else {
       setContent(postEditorModal.content)
-      setImages(postEditorModal.imageUrls)
+      setImages([])
     }
     textareaRef.current?.focus()
     

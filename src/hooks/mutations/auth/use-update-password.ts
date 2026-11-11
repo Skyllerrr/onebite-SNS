@@ -1,4 +1,4 @@
-import type { UseMutationCallback } from './../../types';
+import type { UseMutationCallback } from '@/types';
 import { updatePassword } from '@/api/auth';
 import { useMutation } from '@tanstack/react-query';
 
